@@ -112,6 +112,13 @@
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
   :focus-visible{outline:3px solid rgba(179,21,31,.75);outline-offset:3px;}
   section[id]{scroll-margin-top:92px;}
+  .skip-link{
+    position:fixed;left:14px;top:14px;z-index:1000;
+    background:var(--red);color:#fff;padding:10px 14px;
+    transform:translateY(-180%);transition:transform .18s ease;
+    font-weight:600;
+  }
+  .skip-link:focus{transform:translateY(0);}
 
   /* ---------- Top utility bar ---------- */
   .topbar{
@@ -623,15 +630,16 @@
 </style>
 </head>
 <body>
+<a class="skip-link" href="#mainContent" data-i18n="skip_link">Pereiti prie turinio</a>
 
 <div class="topbar">
   <div class="wrap">
     <div class="topbar-left">
       <span class="live-status" id="liveStatus" data-state="closed" aria-live="polite">Tikrinama...</span>
       <div class="langsw" aria-label="Kalba / Language / Язык">
-        <button type="button" data-lang="lt" class="active" aria-pressed="true">LT</button>
-        <button type="button" data-lang="ru" aria-pressed="false">RU</button>
-        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+        <button type="button" data-lang="lt" class="active" aria-pressed="true" aria-label="Lietuvių kalba">LT</button>
+        <button type="button" data-lang="ru" aria-pressed="false" aria-label="Русский язык">RU</button>
+        <button type="button" data-lang="en" aria-pressed="false" aria-label="English language">EN</button>
       </div>
     </div>
     <a class="tel" href="tel:+37068601360"><span data-i18n="top_service">Servisas:</span> +370 686 01360</a>
@@ -643,7 +651,7 @@
     <a href="#top" class="logo" id="siteLogo">
       <img src="logo.png" alt="Remzona" decoding="async" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:'REMZONA'}))">
     </a>
-    <nav class="main" id="mainNav">
+    <nav class="main" id="mainNav" aria-label="Pagrindinė navigacija">
       <a href="#servisas" data-i18n="nav_service">Servisas</a>
       <a href="#darbai" data-i18n="nav_worklist">Darbų sąrašas</a>
       <a href="#apie" data-i18n="nav_about">Apie mus</a>
@@ -657,6 +665,7 @@
   </div>
 </header>
 
+<main id="mainContent">
 <section class="hero" id="top">
   <div class="hero-media" aria-hidden="true">
     <img src="hero-photo.jpg" alt="" fetchpriority="high" decoding="async" onerror="this.parentElement.style.display='none'">
@@ -895,6 +904,7 @@
     </div>
   </div>
 </section>
+</main>
 
 <footer>
   <div class="wrap">
@@ -927,7 +937,7 @@
   </div>
 </footer>
 
-<div class="mobile-actions" aria-label="Greiti veiksmai">
+<div class="mobile-actions" id="mobileActions" aria-label="Greiti veiksmai">
   <a href="tel:+37068601360" class="mobile-action primary">
     <svg class="quick-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8 9.73a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92z"/></svg>
     <span data-i18n="quick_call">Skambinti</span>
@@ -950,7 +960,8 @@
     nav.classList.toggle('open', open);
     document.body.classList.toggle('menu-open', open);
     burger.setAttribute('aria-expanded', String(open));
-    burger.setAttribute('aria-label', open ? 'Uždaryti meniu' : 'Atidaryti meniu');
+    const t = uiText[currentLang] || uiText.lt;
+    burger.setAttribute('aria-label', open ? t.closeMenu : t.openMenu);
   }
   burger.addEventListener('click', () => setMenu(!nav.classList.contains('open')));
   nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
@@ -967,6 +978,7 @@
   const translations = {
     ru: {
       top_hours: "Пн–Пт 7:30–17:00 · Суббота 7:30–14:00",
+      skip_link: "Перейти к содержанию",
       top_service: "Сервис:",
       logo_sub: "ЗАО · с 2001",
       nav_service: "Услуги", nav_worklist: "Виды работ", nav_about: "О нас", nav_reviews: "Отзывы", nav_contact: "Контакты", nav_call: "Позвонить",
@@ -1025,6 +1037,7 @@
     },
     en: {
       top_hours: "Mon–Fri 7:30–17:00 · Saturday 7:30–14:00",
+      skip_link: "Skip to content",
       top_service: "Service:",
       logo_sub: "UAB · since 2001",
       nav_service: "Services", nav_worklist: "Full work list", nav_about: "About", nav_reviews: "Reviews", nav_contact: "Contact", nav_call: "Call",
@@ -1083,6 +1096,24 @@
     }
   };
 
+  const uiText = {
+    lt:{
+      title:'Remzona — Sunkvežimių servisas Vilniuje | Vilkikų, priekabų remontas ir techninė priežiūra',
+      description:'UAB Remzona — sunkvežimių, vilkikų ir priekabų servisas Vilniuje (Paneriai). Variklių, pavarų dėžių, stabdžių remontas, diagnostika ir ratų geometrija.',
+      nav:'Pagrindinė navigacija', quick:'Greiti veiksmai', openMenu:'Atidaryti meniu', closeMenu:'Uždaryti meniu'
+    },
+    ru:{
+      title:'Remzona — сервис грузовиков в Вильнюсе | Ремонт тягачей и прицепов',
+      description:'UAB Remzona — сервис грузовиков, тягачей и прицепов в Вильнюсе. Ремонт двигателей, КПП, тормозов, диагностика и развал-схождение.',
+      nav:'Основная навигация', quick:'Быстрые действия', openMenu:'Открыть меню', closeMenu:'Закрыть меню'
+    },
+    en:{
+      title:'Remzona — Truck Service in Vilnius | Truck and Trailer Repair',
+      description:'UAB Remzona — truck, tractor unit and trailer service in Vilnius. Engine, gearbox and brake repair, diagnostics and wheel alignment.',
+      nav:'Main navigation', quick:'Quick actions', openMenu:'Open menu', closeMenu:'Close menu'
+    }
+  };
+
   let currentLang = 'lt';
   const original = {};
   document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -1107,6 +1138,14 @@
       b.classList.toggle('active', active);
       b.setAttribute('aria-pressed', String(active));
     });
+    const ui = uiText[lang] || uiText.lt;
+    document.title = ui.title;
+    const description = document.querySelector('meta[name="description"]');
+    if(description) description.setAttribute('content', ui.description);
+    nav.setAttribute('aria-label', ui.nav);
+    const mobileActions = document.getElementById('mobileActions');
+    if(mobileActions) mobileActions.setAttribute('aria-label', ui.quick);
+    burger.setAttribute('aria-label', nav.classList.contains('open') ? ui.closeMenu : ui.openMenu);
     updateBusinessStatus();
   }
 
@@ -1117,10 +1156,11 @@
       try{ localStorage.setItem('remzona-lang', lang); }catch(e){}
     });
   });
+  let savedLang = null;
   try{
-    const savedLang = localStorage.getItem('remzona-lang');
-    if(savedLang && ['lt','ru','en'].includes(savedLang)) applyLang(savedLang);
+    savedLang = localStorage.getItem('remzona-lang');
   }catch(e){}
+  applyLang(savedLang && ['lt','ru','en'].includes(savedLang) ? savedLang : 'lt');
 
   function updateBusinessStatus(){
     const el = document.getElementById('liveStatus');
