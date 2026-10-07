@@ -42,8 +42,8 @@
     "addressCountry": "LT"
   },
   "openingHoursSpecification": [
-    {"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"08:00","closes":"17:00"},
-    {"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday"],"opens":"08:00","closes":"14:00"}
+    {"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"07:30","closes":"17:00"},
+    {"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday"],"opens":"07:30","closes":"14:00"}
   ],
   "url": "https://remzona.lt",
   "priceRange": "$$",
@@ -70,7 +70,7 @@
     {
       "@type": "Question",
       "name": "Koks Remzona darbo laikas?",
-      "acceptedAnswer": {"@type":"Answer","text":"Pirmadienį–penktadienį dirbame 8:00–17:00, šeštadienį 8:00–14:00."}
+      "acceptedAnswer": {"@type":"Answer","text":"Pirmadienį–penktadienį dirbame 7:30–17:00, šeštadienį 7:30–14:00."}
     }
   ]
 }
@@ -871,8 +871,8 @@
         <div class="contact-block">
           <h3 data-i18n="c_hours">Darbo laikas</h3>
           <table class="hours-table">
-            <tr><td data-i18n="c_hours_1">Pirmadienis – Penktadienis</td><td>8:00 – 17:00</td></tr>
-            <tr><td data-i18n="c_hours_2">Šeštadienis</td><td>8:00 – 14:00</td></tr>
+            <tr><td data-i18n="c_hours_1">Pirmadienis – Penktadienis</td><td>7:30 – 17:00</td></tr>
+            <tr><td data-i18n="c_hours_2">Šeštadienis</td><td>7:30 – 14:00</td></tr>
           </table>
         </div>
         <div class="contact-block">
@@ -905,8 +905,8 @@
       <div>
         <div class="footer-title" data-i18n="footer_hours">Darbo laikas</div>
         <ul class="footer-list">
-          <li data-i18n="footer_weekdays">Darbo dienomis 8:00–17:00</li>
-          <li data-i18n="footer_saturday">Šeštadienį 8:00–14:00</li>
+          <li data-i18n="footer_weekdays">Darbo dienomis 7:30–17:00</li>
+          <li data-i18n="footer_saturday">Šeštadienį 7:30–14:00</li>
           <li><a class="footer-route" href="https://maps.app.goo.gl/ifPjGF4wdmdNatda9?g_st=ic" target="_blank" rel="noopener" data-i18n="footer_route">Atidaryti maršrutą →</a></li>
         </ul>
       </div>
@@ -957,7 +957,7 @@
 
   const translations = {
     ru: {
-      top_hours: "Пн–Пт 8:00–17:00 · Суббота 8:00–14:00",
+      top_hours: "Пн–Пт 7:30–17:00 · Суббота 7:30–14:00",
       top_service: "Сервис:",
       logo_sub: "ЗАО · с 2001",
       nav_service: "Услуги", nav_worklist: "Виды работ", nav_about: "О нас", nav_reviews: "Отзывы", nav_contact: "Контакты", nav_call: "Позвонить",
@@ -1008,14 +1008,14 @@
       c_details_p: "Код компании: 125563915<br>Код НДС: LT255639113",
       footer_intro: "Техническое обслуживание и ремонт коммерческого транспорта в Вильнюсе с 2001 года.",
       footer_contacts: "Контакты", footer_hours: "Часы работы",
-      footer_weekdays: "Пн–Пт 8:00–17:00", footer_saturday: "Суббота 8:00–14:00",
+      footer_weekdays: "Пн–Пт 7:30–17:00", footer_saturday: "Суббота 7:30–14:00",
       footer_route: "Открыть маршрут →",
       quick_call: "Позвонить", quick_email: "Эл. почта", quick_route: "Маршрут",
       footer_rights: '© <span id="year2"></span> UAB «Remzona». Все права защищены.',
       mobile_call: "Позвонить"
     },
     en: {
-      top_hours: "Mon–Fri 8:00–17:00 · Saturday 8:00–14:00",
+      top_hours: "Mon–Fri 7:30–17:00 · Saturday 7:30–14:00",
       top_service: "Service:",
       logo_sub: "UAB · since 2001",
       nav_service: "Services", nav_worklist: "Full work list", nav_about: "About", nav_reviews: "Reviews", nav_contact: "Contact", nav_call: "Call",
@@ -1066,7 +1066,7 @@
       c_details_p: "Company code: 125563915<br>VAT code: LT255639113",
       footer_intro: "Commercial vehicle maintenance and repair in Vilnius since 2001.",
       footer_contacts: "Contacts", footer_hours: "Working hours",
-      footer_weekdays: "Mon–Fri 8:00–17:00", footer_saturday: "Saturday 8:00–14:00",
+      footer_weekdays: "Mon–Fri 7:30–17:00", footer_saturday: "Saturday 7:30–14:00",
       footer_route: "Open directions →",
       quick_call: "Call", quick_email: "Email", quick_route: "Directions",
       footer_rights: '© <span id="year2"></span> UAB "Remzona". All rights reserved.',
@@ -1124,30 +1124,30 @@
     const minutes = Number(get('hour')) * 60 + Number(get('minute'));
     const weekday = ['Mon','Tue','Wed','Thu','Fri'].includes(day);
     const saturday = day === 'Sat';
-    const open = (weekday && minutes >= 480 && minutes < 1020) || (saturday && minutes >= 480 && minutes < 840);
+    const open = (weekday && minutes >= 450 && minutes < 1020) || (saturday && minutes >= 450 && minutes < 840);
     el.dataset.state = open ? 'open' : 'closed';
 
     const labels = {
       lt:{
         open17:'Atidaryta · iki 17:00', open14:'Atidaryta · iki 14:00',
-        before:'Uždaryta · atsidarys 8:00', tomorrow:'Uždaryta · rytoj 8:00',
-        saturday:'Uždaryta · šeštadienį 8:00', monday:'Uždaryta · pirmadienį 8:00'
+        before:'Uždaryta · atsidarys 7:30', tomorrow:'Uždaryta · rytoj 7:30',
+        saturday:'Uždaryta · šeštadienį 7:30', monday:'Uždaryta · pirmadienį 7:30'
       },
       ru:{
         open17:'Открыто · до 17:00', open14:'Открыто · до 14:00',
-        before:'Закрыто · откроется в 8:00', tomorrow:'Закрыто · завтра в 8:00',
-        saturday:'Закрыто · в субботу в 8:00', monday:'Закрыто · в понедельник в 8:00'
+        before:'Закрыто · откроется в 7:30', tomorrow:'Закрыто · завтра в 7:30',
+        saturday:'Закрыто · в субботу в 7:30', monday:'Закрыто · в понедельник в 7:30'
       },
       en:{
         open17:'Open · until 17:00', open14:'Open · until 14:00',
-        before:'Closed · opens 8:00', tomorrow:'Closed · tomorrow 8:00',
-        saturday:'Closed · Saturday 8:00', monday:'Closed · Monday 8:00'
+        before:'Closed · opens 7:30', tomorrow:'Closed · tomorrow 7:30',
+        saturday:'Closed · Saturday 7:30', monday:'Closed · Monday 7:30'
       }
     };
     const t = labels[currentLang] || labels.lt;
     if(open){
       el.textContent = saturday ? t.open14 : t.open17;
-    } else if((weekday || saturday) && minutes < 480){
+    } else if((weekday || saturday) && minutes < 450){
       el.textContent = t.before;
     } else if(['Mon','Tue','Wed','Thu'].includes(day)){
       el.textContent = t.tomorrow;
