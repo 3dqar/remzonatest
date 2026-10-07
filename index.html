@@ -158,8 +158,11 @@
     display:inline-flex;align-items:center;gap:8px;
   }
   .nav-cta:hover{background:var(--red-dark);}
-  .burger{display:none;background:none;border:0;cursor:pointer;padding:8px;}
-  .burger span{display:block;width:24px;height:2px;background:var(--ink);margin:5px 0;}
+  .burger{display:none;background:none;border:0;cursor:pointer;padding:8px;border-radius:6px;}
+  .burger span{display:block;width:24px;height:2px;background:var(--ink);margin:5px 0;transition:transform .2s ease,opacity .2s ease;}
+  .burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .burger[aria-expanded="true"] span:nth-child(2){opacity:0;}
+  .burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 
   /* ---------- Hero ---------- */
   .hero{
@@ -324,7 +327,19 @@
     background:#fff;padding:32px 28px;
   }
   .svc-card .icon{
-    width:44px;height:44px;margin-bottom:20px;color:var(--red);
+    width:50px;height:50px;margin-bottom:20px;color:var(--red);
+    padding:10px;border:1px solid rgba(179,21,31,.18);
+    background:rgba(179,21,31,.055);border-radius:10px;
+    transition:transform .2s ease,border-color .2s ease,background .2s ease;
+  }
+  .svc-card:hover .icon{
+    transform:translateY(-2px);
+    border-color:rgba(179,21,31,.42);
+    background:rgba(179,21,31,.085);
+  }
+  .phone-icon{
+    width:18px;height:18px;display:inline-block;flex:0 0 auto;
+    fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
   }
   .svc-card h3{font-size:18px;margin-bottom:10px;}
   .svc-card p{color:var(--steel);font-size:14.5px;}
@@ -408,14 +423,18 @@
     display:none;position:fixed;bottom:16px;right:16px;left:16px;z-index:60;
     background:var(--red);color:#fff;text-align:center;
     padding:15px;font-weight:600;text-transform:uppercase;letter-spacing:0.03em;
+    align-items:center;justify-content:center;gap:9px;
     box-shadow:0 6px 20px rgba(0,0,0,0.25);
   }
 
   /* ---------- Responsive ---------- */
   @media (max-width:900px){
-    nav.main{position:fixed;top:64px;left:0;right:0;bottom:0;background:#fff;
-      flex-direction:column;align-items:flex-start;padding:24px;gap:22px;
-      transform:translateX(100%);transition:transform 0.25s ease;overflow-y:auto;}
+    nav.main{position:fixed;top:0;left:0;right:0;bottom:0;background:#fff;
+      flex-direction:column;align-items:flex-start;padding:104px 24px 32px;gap:22px;
+      transform:translateX(100%);transition:transform 0.25s ease;overflow-y:auto;
+      visibility:hidden;pointer-events:none;}
+    nav.main.open{visibility:visible;pointer-events:auto;}
+    body.menu-open{overflow:hidden;}
     nav.main.open{transform:translateX(0);}
     nav.main a{font-size:18px;}
     .burger{display:block;}
@@ -430,7 +449,7 @@
     .topbar .wrap{font-size:12px;}
     .topbar-left{gap:10px;}
     section{padding:56px 0;}
-    .mobile-call{display:block;}
+    .mobile-call{display:flex;}
     body{padding-bottom:76px;}
     .reviews-card{padding:32px 24px;}
   }
@@ -480,7 +499,7 @@
       <a href="#apie" data-i18n="nav_about">Apie mus</a>
       <a href="#atsiliepimai" data-i18n="nav_reviews">Atsiliepimai</a>
       <a href="#kontaktai" data-i18n="nav_contact">Kontaktai</a>
-      <a href="tel:+37068601360" class="nav-cta">📞 <span data-i18n="nav_call">Skambinti</span></a>
+      <a href="tel:+37068601360" class="nav-cta"><svg class="phone-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8 9.73a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92z"/></svg><span data-i18n="nav_call">Skambinti</span></a>
     </nav>
     <button class="burger" id="burgerBtn" aria-label="Meniu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -498,7 +517,7 @@
       <h1><span data-i18n="hero_h1_1">Komercinio transporto</span> <em data-i18n="hero_h1_2">techninė priežiūra</em> <span data-i18n="hero_h1_3">ir remontas</span></h1>
       <p class="lead" data-i18n="hero_lead">Sunkvežimiai, priekabos, puspriekabės, autobusai — visų markių. Kompiuterinė diagnostika, variklių ir pavarų dėžių remontas, oro bei stabdžių sistemos Vilniuje.</p>
       <div class="hero-ctas">
-        <a href="tel:+37068601360" class="btn btn-primary">📞 +370 686 01360</a>
+        <a href="tel:+37068601360" class="btn btn-primary"><svg class="phone-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8 9.73a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92z"/></svg>+370 686 01360</a>
         <a href="#kontaktai" class="btn btn-ghost" data-i18n="hero_cta2">Kaip mus rasti</a>
       </div>
       <div class="hero-strip">
@@ -695,20 +714,29 @@
   </div>
 </footer>
 
-<a href="tel:+37068601360" class="mobile-call"><span data-i18n="mobile_call">📞 Skambinti dabar</span></a>
+<a href="tel:+37068601360" class="mobile-call"><svg class="phone-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8 9.73a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92z"/></svg><span data-i18n="mobile_call">Skambinti dabar</span></a>
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
   const burger = document.getElementById('burgerBtn');
   const nav = document.getElementById('mainNav');
-  burger.addEventListener('click', () => {
-    const open = nav.classList.toggle('open');
-    burger.setAttribute('aria-expanded', open);
+  function setMenu(open){
+    nav.classList.toggle('open', open);
+    document.body.classList.toggle('menu-open', open);
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Uždaryti meniu' : 'Atidaryti meniu');
+  }
+  burger.addEventListener('click', () => setMenu(!nav.classList.contains('open')));
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', e => {
+    if(e.key === 'Escape' && nav.classList.contains('open')){
+      setMenu(false);
+      burger.focus();
+    }
   });
-  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    nav.classList.remove('open');
-    burger.setAttribute('aria-expanded', 'false');
-  }));
+  window.addEventListener('resize', () => {
+    if(window.innerWidth > 900 && nav.classList.contains('open')) setMenu(false);
+  });
 
   const translations = {
     ru: {
@@ -756,7 +784,7 @@
       c_hours: "Часы работы", c_hours_1: "Понедельник – Пятница", c_hours_2: "Суббота", c_details: "Реквизиты",
       c_details_p: "Код компании: 125563915<br>Код НДС: LT255639113",
       footer_rights: '© <span id="year2"></span> UAB «Remzona». Все права защищены.',
-      mobile_call: "📞 Позвонить"
+      mobile_call: "Позвонить"
     },
     en: {
       top_hours: "Mon–Fri 7:30–17:00 · Saturday 8:00–14:00",
@@ -803,7 +831,7 @@
       c_hours: "Working hours", c_hours_1: "Monday – Friday", c_hours_2: "Saturday", c_details: "Company details",
       c_details_p: "Company code: 125563915<br>VAT code: LT255639113",
       footer_rights: '© <span id="year2"></span> UAB "Remzona". All rights reserved.',
-      mobile_call: "📞 Call now"
+      mobile_call: "Call now"
     }
   };
 
@@ -830,13 +858,21 @@
   }
 
   document.querySelectorAll('.langsw button').forEach(btn => {
-    btn.addEventListener('click', () => applyLang(btn.getAttribute('data-lang')));
+    btn.addEventListener('click', () => {
+      const lang = btn.getAttribute('data-lang');
+      applyLang(lang);
+      try{ localStorage.setItem('remzona-lang', lang); }catch(e){}
+    });
   });
+  try{
+    const savedLang = localStorage.getItem('remzona-lang');
+    if(savedLang && ['lt','ru','en'].includes(savedLang)) applyLang(savedLang);
+  }catch(e){}
 
   // Scroll reveal
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const revealEls = document.querySelectorAll('.reveal');
-  if(prefersReduced){
+  if(prefersReduced || !('IntersectionObserver' in window)){
     revealEls.forEach(el => el.classList.add('is-visible'));
   } else {
     const io = new IntersectionObserver((entries) => {
