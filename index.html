@@ -34,7 +34,7 @@
     "addressCountry": "LT"
   },
   "openingHoursSpecification": [
-    {"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"07:30","closes":"17:00"},
+    {"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"08:00","closes":"17:00"},
     {"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday"],"opens":"08:00","closes":"14:00"}
   ],
   "url": "https://remzona.lt",
@@ -62,7 +62,7 @@
     {
       "@type": "Question",
       "name": "Koks Remzona darbo laikas?",
-      "acceptedAnswer": {"@type":"Answer","text":"Pirmadienį–penktadienį dirbame 7:30–17:00, šeštadienį 8:00–14:00."}
+      "acceptedAnswer": {"@type":"Answer","text":"Pirmadienį–penktadienį dirbame 8:00–17:00, šeštadienį 8:00–14:00."}
     }
   ]
 }
@@ -80,7 +80,8 @@
     --maxw:1180px;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth;}
+  html{scroll-behavior:smooth;scroll-padding-top:92px;}
+  ::selection{background:rgba(179,21,31,.18);}
   body{
     font-family:'IBM Plex Sans',sans-serif;
     color:var(--ink);
@@ -98,7 +99,8 @@
   a{color:inherit;text-decoration:none;}
   img{max-width:100%;display:block;}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
-  :focus-visible{outline:3px solid var(--red);outline-offset:2px;}
+  :focus-visible{outline:3px solid rgba(179,21,31,.75);outline-offset:3px;}
+  section[id]{scroll-margin-top:92px;}
 
   /* ---------- Top utility bar ---------- */
   .topbar{
@@ -127,8 +129,11 @@
   /* ---------- Header / nav ---------- */
   header.site{
     position:sticky;top:0;z-index:50;
-    background:var(--paper);
+    background:rgba(255,255,255,.96);
     border-bottom:1px solid var(--line);
+    box-shadow:0 6px 22px rgba(24,22,20,.045);
+    backdrop-filter:saturate(140%) blur(10px);
+    -webkit-backdrop-filter:saturate(140%) blur(10px);
   }
   .navrow{
     display:flex;align-items:center;justify-content:space-between;
@@ -148,18 +153,23 @@
   nav.main{display:flex;gap:28px;align-items:center;}
   nav.main a{
     font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;
-    padding:6px 2px;border-bottom:2px solid transparent;
+    padding:7px 2px;border-bottom:2px solid transparent;
+    transition:color .18s ease,border-color .18s ease;
   }
-  nav.main a:hover{border-bottom-color:var(--red);}
+  nav.main a:hover,nav.main a.active{color:var(--red);border-bottom-color:var(--red);}
   .nav-cta{
     background:var(--red);color:#fff;
     padding:11px 20px;font-weight:600;font-size:14px;
     text-transform:uppercase;letter-spacing:0.03em;
     display:inline-flex;align-items:center;gap:8px;
   }
-  .nav-cta:hover{background:var(--red-dark);}
-  .burger{display:none;background:none;border:0;cursor:pointer;padding:8px;}
-  .burger span{display:block;width:24px;height:2px;background:var(--ink);margin:5px 0;}
+  .nav-cta{transition:background .18s ease,transform .18s ease,box-shadow .18s ease;}
+  .nav-cta:hover{background:var(--red-dark);transform:translateY(-1px);box-shadow:0 8px 18px rgba(126,15,23,.2);}
+  .burger{display:none;background:none;border:0;cursor:pointer;padding:8px;border-radius:6px;}
+  .burger span{display:block;width:24px;height:2px;background:var(--ink);margin:5px 0;transition:transform .2s ease,opacity .2s ease;}
+  .burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .burger[aria-expanded="true"] span:nth-child(2){opacity:0;}
+  .burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 
   /* ---------- Hero ---------- */
   .hero{
@@ -170,11 +180,12 @@
     border-bottom:6px solid var(--red);
   }
   .hero .wrap{
-    padding:64px 24px 56px;
-    max-width:820px;
+    padding:72px 24px 58px;
+    max-width:var(--maxw);
     position:relative;
     z-index:2;
   }
+  .hero .wrap>div{max-width:720px;}
 
   /* Right-side photo, glowing out of the dark background */
   .hero-media{
@@ -237,15 +248,16 @@
   }
   .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:48px;}
   .btn{
-    display:inline-flex;align-items:center;gap:10px;
-    padding:15px 26px;font-weight:600;font-size:15px;
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;
+    min-height:50px;padding:14px 26px;font-weight:600;font-size:15px;
     text-transform:uppercase;letter-spacing:0.03em;
     border:1px solid transparent;cursor:pointer;
+    transition:background .18s ease,border-color .18s ease,transform .18s ease,box-shadow .18s ease;
   }
   .btn-primary{background:var(--red);color:#fff;}
-  .btn-primary:hover{background:var(--red-dark);}
+  .btn-primary:hover{background:var(--red-dark);transform:translateY(-1px);box-shadow:0 9px 22px rgba(126,15,23,.22);}
   .btn-ghost{border-color:#4A4744;color:#fff;}
-  .btn-ghost:hover{border-color:#fff;}
+  .btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.06);transform:translateY(-1px);}
 
   @keyframes heroIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
   .hero-eyebrow,.hero h1,.hero p.lead,.hero-ctas,.hero-strip{animation:heroIn 0.7s ease backwards;}
@@ -292,8 +304,10 @@
   .partners-track:hover{animation-play-state:paused;}
   .partner-logo{
     height:34px;width:auto;max-width:140px;object-fit:contain;
-    flex-shrink:0;filter:grayscale(100%);opacity:0.8;
+    flex-shrink:0;filter:grayscale(100%);opacity:.72;
+    transition:filter .2s ease,opacity .2s ease,transform .2s ease;
   }
+  .partner-logo:hover{filter:grayscale(0%);opacity:1;transform:translateY(-2px);}
   .partner-fallback{
     font-family:'Oswald',sans-serif;font-weight:600;font-size:14px;
     letter-spacing:0.03em;color:var(--steel);text-transform:uppercase;
@@ -322,9 +336,30 @@
   }
   .svc-card{
     background:#fff;padding:32px 28px;
+    position:relative;overflow:hidden;
+    transition:transform .2s ease,box-shadow .2s ease,background .2s ease;
   }
+  .svc-card::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:3px;
+    background:var(--red);transform:scaleX(0);transform-origin:left;
+    transition:transform .2s ease;
+  }
+  .svc-card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(24,22,20,.08);z-index:1;}
+  .svc-card:hover::after{transform:scaleX(1);}
   .svc-card .icon{
-    width:44px;height:44px;margin-bottom:20px;color:var(--red);
+    width:50px;height:50px;margin-bottom:20px;color:var(--red);
+    padding:10px;border:1px solid rgba(179,21,31,.18);
+    background:rgba(179,21,31,.055);border-radius:10px;
+    transition:transform .2s ease,border-color .2s ease,background .2s ease;
+  }
+  .svc-card:hover .icon{
+    transform:translateY(-2px);
+    border-color:rgba(179,21,31,.42);
+    background:rgba(179,21,31,.085);
+  }
+  .phone-icon{
+    width:18px;height:18px;display:inline-block;flex:0 0 auto;
+    fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
   }
   .svc-card h3{font-size:18px;margin-bottom:10px;}
   .svc-card p{color:var(--steel);font-size:14.5px;}
@@ -337,9 +372,11 @@
   .checklist li{
     break-inside:avoid;
     display:flex;gap:12px;align-items:flex-start;
-    padding:11px 0;border-bottom:1px solid var(--line);
+    padding:12px 0;border-bottom:1px solid var(--line);
     font-size:15px;
+    transition:color .15s ease,padding-left .15s ease;
   }
+  .checklist li:hover{color:var(--red);padding-left:4px;}
   .checklist li::before{
     content:"";
     flex-shrink:0;margin-top:6px;
@@ -358,6 +395,7 @@
     border:1px solid var(--line);
     text-align:center;padding:24px;
     overflow:hidden;
+    box-shadow:0 16px 38px rgba(24,22,20,.09);
   }
   .about-photo img{
     width:100%;height:100%;object-fit:cover;display:block;
@@ -369,7 +407,9 @@
   /* ---------- Reviews ---------- */
   .reviews-card{
     display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;
-    background:var(--ink);color:#fff;padding:40px 44px;
+    background:linear-gradient(135deg,#181614,#24211e);color:#fff;padding:40px 44px;
+    border-left:4px solid var(--red);
+    box-shadow:0 16px 38px rgba(24,22,20,.1);
   }
   .reviews-stars{display:flex;gap:6px;margin-bottom:10px;}
   .reviews-stars svg{width:22px;height:22px;fill:var(--red);}
@@ -381,6 +421,8 @@
   .contact-grid{
     display:grid;grid-template-columns:1fr 1fr;gap:0;
     border:1px solid var(--line);
+    box-shadow:0 16px 40px rgba(24,22,20,.07);
+    overflow:hidden;
   }
   .contact-info{padding:44px;background:#fff;}
   .contact-block{margin-bottom:28px;}
@@ -389,7 +431,8 @@
     font-family:'IBM Plex Mono',monospace;font-weight:500;margin-bottom:10px;
   }
   .contact-block a,.contact-block p{font-size:15.5px;}
-  .contact-block a:hover{color:var(--red);}
+  .contact-block a{font-weight:500;text-decoration-color:transparent;text-underline-offset:3px;transition:color .15s ease,text-decoration-color .15s ease;}
+  .contact-block a:hover{color:var(--red);text-decoration:underline;text-decoration-color:currentColor;}
   .hours-table{width:100%;font-size:15px;border-collapse:collapse;}
   .hours-table td{padding:6px 0;border-bottom:1px solid var(--line);}
   .hours-table td:last-child{text-align:right;font-family:'IBM Plex Mono',monospace;}
@@ -408,31 +451,72 @@
     display:none;position:fixed;bottom:16px;right:16px;left:16px;z-index:60;
     background:var(--red);color:#fff;text-align:center;
     padding:15px;font-weight:600;text-transform:uppercase;letter-spacing:0.03em;
-    box-shadow:0 6px 20px rgba(0,0,0,0.25);
+    align-items:center;justify-content:center;gap:9px;
+    box-shadow:0 8px 24px rgba(0,0,0,.28);
+    border-radius:8px;
+    transition:background .18s ease,transform .18s ease;
   }
+  .mobile-call:hover{background:var(--red-dark);transform:translateY(-1px);}
 
   /* ---------- Responsive ---------- */
+  @media (max-width:1100px) and (min-width:701px){
+    .grid-services{grid-template-columns:repeat(2,1fr);}
+    nav.main{gap:18px;}
+    nav.main a{font-size:13px;}
+  }
   @media (max-width:900px){
-    nav.main{position:fixed;top:64px;left:0;right:0;bottom:0;background:#fff;
-      flex-direction:column;align-items:flex-start;padding:24px;gap:22px;
-      transform:translateX(100%);transition:transform 0.25s ease;overflow-y:auto;}
-    nav.main.open{transform:translateX(0);}
-    nav.main a{font-size:18px;}
-    .burger{display:block;}
-    .nav-cta{display:none;}
-    .hero .wrap{grid-template-columns:1fr;padding-top:36px;}
-    .hero-strip{grid-template-columns:1fr;}
-    .hero-strip div{border-right:0;border-bottom:1px solid #322F2B;}
-    .grid-services{grid-template-columns:1fr;}
+    header.site{backdrop-filter:none;-webkit-backdrop-filter:none;}
+    nav.main{position:fixed;top:0;left:0;right:0;bottom:0;background:#fff;
+      flex-direction:column;align-items:flex-start;padding:108px 24px 36px;gap:4px;
+      transform:translateX(100%);opacity:0;
+      transition:transform .25s ease,opacity .2s ease;overflow-y:auto;
+      visibility:hidden;pointer-events:none;z-index:-1;}
+    nav.main.open{visibility:visible;pointer-events:auto;transform:translateX(0);opacity:1;}
+    body.menu-open{overflow:hidden;}
+    nav.main a{font-size:19px;width:100%;padding:14px 0;border-bottom:1px solid var(--line);}
+    nav.main a.active{border-bottom-color:var(--line);}
+    .burger{display:block;position:relative;z-index:2;}
+    .nav-cta{display:none!important;}
+    .hero .wrap{padding-top:48px;padding-bottom:42px;}
+    .hero .wrap>div{max-width:640px;}
+    .hero-strip{grid-template-columns:repeat(3,1fr);}
+    .hero-strip div{padding:16px 12px;text-align:center;}
+    .hero-strip .num{font-size:23px;}
+    .hero-strip .lbl{font-size:10.5px;}
     .checklist{columns:1;}
-    .about-grid{grid-template-columns:1fr;}
+    .about-grid{grid-template-columns:1fr;gap:34px;}
     .contact-grid{grid-template-columns:1fr;}
     .topbar .wrap{font-size:12px;}
     .topbar-left{gap:10px;}
-    section{padding:56px 0;}
-    .mobile-call{display:block;}
-    body{padding-bottom:76px;}
+    section{padding:60px 0;}
+    .mobile-call{display:flex;}
+    body{padding-bottom:84px;}
     .reviews-card{padding:32px 24px;}
+  }
+  @media (max-width:700px){
+    .wrap{padding-left:18px;padding-right:18px;}
+    .grid-services{grid-template-columns:1fr;}
+    .svc-card{padding:28px 22px;}
+    .topbar .wrap{align-items:flex-start;}
+    .topbar-left{width:100%;justify-content:space-between;}
+    .topbar a.tel{width:100%;padding-top:2px;}
+    .logo{height:42px;}
+    .hero h1{font-size:clamp(34px,10vw,46px);}
+    .hero p.lead{font-size:16px;}
+    .hero-ctas{flex-direction:column;align-items:stretch;margin-bottom:34px;}
+    .hero-ctas .btn{width:100%;}
+    .stats-row{gap:24px;justify-content:space-between;}
+    .contact-info{padding:30px 22px;}
+    .map-embed,.map-embed iframe{min-height:320px;}
+  }
+  @media (max-width:520px){
+    .hero-strip{grid-template-columns:1fr;}
+    .hero-strip div{border-right:0;border-bottom:1px solid #322F2B;text-align:left;padding:14px 0;}
+    .hero-strip div:last-child{border-bottom:0;}
+    .partners-track{gap:44px;}
+    .partner-logo{height:30px;max-width:120px;}
+    .reviews-card .btn{width:100%;}
+    .hours-table{font-size:13.5px;}
   }
 
   /* ---------- Scroll reveal ---------- */
@@ -458,11 +542,11 @@
 <div class="topbar">
   <div class="wrap">
     <div class="topbar-left">
-      <span class="hours" data-i18n="top_hours">D.D. 7:30–17:00 · Šeštadienį 8:00–14:00</span>
+      <span class="hours" data-i18n="top_hours">D.D. 8:00–17:00 · Šeštadienį 8:00–14:00</span>
       <div class="langsw" aria-label="Kalba / Language / Язык">
-        <button type="button" data-lang="lt" class="active">LT</button>
-        <button type="button" data-lang="ru">RU</button>
-        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="lt" class="active" aria-pressed="true">LT</button>
+        <button type="button" data-lang="ru" aria-pressed="false">RU</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
       </div>
     </div>
     <a class="tel" href="tel:+37068601360"><span data-i18n="top_service">Servisas:</span> +370 686 01360</a>
@@ -480,7 +564,7 @@
       <a href="#apie" data-i18n="nav_about">Apie mus</a>
       <a href="#atsiliepimai" data-i18n="nav_reviews">Atsiliepimai</a>
       <a href="#kontaktai" data-i18n="nav_contact">Kontaktai</a>
-      <a href="tel:+37068601360" class="nav-cta">📞 <span data-i18n="nav_call">Skambinti</span></a>
+      <a href="tel:+37068601360" class="nav-cta"><svg class="phone-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8 9.73a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92z"/></svg><span data-i18n="nav_call">Skambinti</span></a>
     </nav>
     <button class="burger" id="burgerBtn" aria-label="Meniu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -494,11 +578,11 @@
   </div>
   <div class="wrap">
     <div>
-      <div class="hero-eyebrow" data-i18n="hero_eyebrow">Dirbtuvės atidarytos šiandien</div>
+      <div class="hero-eyebrow" data-i18n="hero_eyebrow">Sunkvežimių servisas Vilniuje</div>
       <h1><span data-i18n="hero_h1_1">Komercinio transporto</span> <em data-i18n="hero_h1_2">techninė priežiūra</em> <span data-i18n="hero_h1_3">ir remontas</span></h1>
       <p class="lead" data-i18n="hero_lead">Sunkvežimiai, priekabos, puspriekabės, autobusai — visų markių. Kompiuterinė diagnostika, variklių ir pavarų dėžių remontas, oro bei stabdžių sistemos Vilniuje.</p>
       <div class="hero-ctas">
-        <a href="tel:+37068601360" class="btn btn-primary">📞 +370 686 01360</a>
+        <a href="tel:+37068601360" class="btn btn-primary"><svg class="phone-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8 9.73a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92z"/></svg>+370 686 01360</a>
         <a href="#kontaktai" class="btn btn-ghost" data-i18n="hero_cta2">Kaip mus rasti</a>
       </div>
       <div class="hero-strip">
@@ -673,7 +757,7 @@
         <div class="contact-block">
           <h3 data-i18n="c_hours">Darbo laikas</h3>
           <table class="hours-table">
-            <tr><td data-i18n="c_hours_1">Pirmadienis – Penktadienis</td><td>7:30 – 16:30</td></tr>
+            <tr><td data-i18n="c_hours_1">Pirmadienis – Penktadienis</td><td>8:00 – 17:00</td></tr>
             <tr><td data-i18n="c_hours_2">Šeštadienis</td><td>8:00 – 14:00</td></tr>
           </table>
         </div>
@@ -695,28 +779,37 @@
   </div>
 </footer>
 
-<a href="tel:+37068601360" class="mobile-call"><span data-i18n="mobile_call">📞 Skambinti dabar</span></a>
+<a href="tel:+37068601360" class="mobile-call"><svg class="phone-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8 9.73a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92z"/></svg><span data-i18n="mobile_call">Skambinti dabar</span></a>
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
   const burger = document.getElementById('burgerBtn');
   const nav = document.getElementById('mainNav');
-  burger.addEventListener('click', () => {
-    const open = nav.classList.toggle('open');
-    burger.setAttribute('aria-expanded', open);
+  function setMenu(open){
+    nav.classList.toggle('open', open);
+    document.body.classList.toggle('menu-open', open);
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Uždaryti meniu' : 'Atidaryti meniu');
+  }
+  burger.addEventListener('click', () => setMenu(!nav.classList.contains('open')));
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', e => {
+    if(e.key === 'Escape' && nav.classList.contains('open')){
+      setMenu(false);
+      burger.focus();
+    }
   });
-  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    nav.classList.remove('open');
-    burger.setAttribute('aria-expanded', 'false');
-  }));
+  window.addEventListener('resize', () => {
+    if(window.innerWidth > 900 && nav.classList.contains('open')) setMenu(false);
+  });
 
   const translations = {
     ru: {
-      top_hours: "Пн–Пт 7:30–17:00 · Суббота 8:00–14:00",
+      top_hours: "Пн–Пт 8:00–17:00 · Суббота 8:00–14:00",
       top_service: "Сервис:",
       logo_sub: "ЗАО · с 2001",
       nav_service: "Услуги", nav_worklist: "Виды работ", nav_about: "О нас", nav_reviews: "Отзывы", nav_contact: "Контакты", nav_call: "Позвонить",
-      hero_eyebrow: "Мастерская открыта сегодня",
+      hero_eyebrow: "Сервис грузового транспорта в Вильнюсе",
       hero_h1_1: "Техническое обслуживание", hero_h1_2: "и ремонт", hero_h1_3: "коммерческого транспорта",
       hero_lead: "Грузовики, прицепы, полуприцепы, автобусы — всех марок. Компьютерная диагностика, ремонт двигателей и КПП, пневмо- и тормозные системы в Вильнюсе.",
       hero_cta2: "Как нас найти",
@@ -756,14 +849,14 @@
       c_hours: "Часы работы", c_hours_1: "Понедельник – Пятница", c_hours_2: "Суббота", c_details: "Реквизиты",
       c_details_p: "Код компании: 125563915<br>Код НДС: LT255639113",
       footer_rights: '© <span id="year2"></span> UAB «Remzona». Все права защищены.',
-      mobile_call: "📞 Позвонить"
+      mobile_call: "Позвонить"
     },
     en: {
-      top_hours: "Mon–Fri 7:30–17:00 · Saturday 8:00–14:00",
+      top_hours: "Mon–Fri 8:00–17:00 · Saturday 8:00–14:00",
       top_service: "Service:",
       logo_sub: "UAB · since 2001",
       nav_service: "Services", nav_worklist: "Full work list", nav_about: "About", nav_reviews: "Reviews", nav_contact: "Contact", nav_call: "Call",
-      hero_eyebrow: "Workshop open today",
+      hero_eyebrow: "Truck service in Vilnius",
       hero_h1_1: "Commercial vehicle", hero_h1_2: "maintenance", hero_h1_3: "and repair",
       hero_lead: "Trucks, trailers, semi-trailers, buses — all makes. Computer diagnostics, engine and gearbox repair, air and brake systems in Vilnius.",
       hero_cta2: "How to find us",
@@ -803,7 +896,7 @@
       c_hours: "Working hours", c_hours_1: "Monday – Friday", c_hours_2: "Saturday", c_details: "Company details",
       c_details_p: "Company code: 125563915<br>VAT code: LT255639113",
       footer_rights: '© <span id="year2"></span> UAB "Remzona". All rights reserved.',
-      mobile_call: "📞 Call now"
+      mobile_call: "Call now"
     }
   };
 
@@ -825,18 +918,28 @@
     const y2 = document.getElementById('year2');
     if(y2) y2.textContent = new Date().getFullYear();
     document.querySelectorAll('.langsw button').forEach(b => {
-      b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+      const active = b.getAttribute('data-lang') === lang;
+      b.classList.toggle('active', active);
+      b.setAttribute('aria-pressed', String(active));
     });
   }
 
   document.querySelectorAll('.langsw button').forEach(btn => {
-    btn.addEventListener('click', () => applyLang(btn.getAttribute('data-lang')));
+    btn.addEventListener('click', () => {
+      const lang = btn.getAttribute('data-lang');
+      applyLang(lang);
+      try{ localStorage.setItem('remzona-lang', lang); }catch(e){}
+    });
   });
+  try{
+    const savedLang = localStorage.getItem('remzona-lang');
+    if(savedLang && ['lt','ru','en'].includes(savedLang)) applyLang(savedLang);
+  }catch(e){}
 
   // Scroll reveal
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const revealEls = document.querySelectorAll('.reveal');
-  if(prefersReduced){
+  if(prefersReduced || !('IntersectionObserver' in window)){
     revealEls.forEach(el => el.classList.add('is-visible'));
   } else {
     const io = new IntersectionObserver((entries) => {
@@ -848,6 +951,27 @@
       });
     }, {threshold: 0.12, rootMargin: '0px 0px -40px 0px'});
     revealEls.forEach(el => io.observe(el));
+  }
+
+  // Highlight the currently viewed section in desktop navigation
+  if('IntersectionObserver' in window){
+    const navLinks = [...nav.querySelectorAll('a[href^="#"]')];
+    const sections = navLinks
+      .map(link => document.querySelector(link.getAttribute('href')))
+      .filter(Boolean);
+    const navObserver = new IntersectionObserver(entries => {
+      const visible = entries
+        .filter(entry => entry.isIntersecting)
+        .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if(!visible) return;
+      navLinks.forEach(link => {
+        const active = link.getAttribute('href') === '#' + visible.target.id;
+        link.classList.toggle('active', active);
+        if(active) link.setAttribute('aria-current','location');
+        else link.removeAttribute('aria-current');
+      });
+    }, {rootMargin:'-25% 0px -60% 0px',threshold:[0,.15,.4]});
+    sections.forEach(section => navObserver.observe(section));
   }
 
   // Partner logo fallback if image not uploaded yet
