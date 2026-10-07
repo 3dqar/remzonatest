@@ -23,6 +23,7 @@
 <meta name="theme-color" content="#181614">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="canonical" href="https://remzona.lt/">
+<link rel="preload" as="image" href="hero-photo.jpg" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
@@ -46,7 +47,9 @@
     {"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday"],"opens":"07:30","closes":"14:00"}
   ],
   "url": "https://remzona.lt",
-  "priceRange": "$$",
+  "image": "https://remzona.lt/hero-photo.jpg",
+  "hasMap": "https://maps.app.goo.gl/ifPjGF4wdmdNatda9",
+  "priceRange": "$",
   "areaServed": "Vilnius",
   "vatID": "LT255639113",
   "sameAs": ["https://maps.app.goo.gl/ifPjGF4wdmdNatda9"]
@@ -342,6 +345,12 @@
   /* ---------- Section basics ---------- */
   section{padding:80px 0;}
   .section-alt{background:var(--bg-alt);}
+  @supports (content-visibility:auto){
+    #darbai,#kodel,#apie,#atsiliepimai,#kontaktai{
+      content-visibility:auto;
+      contain-intrinsic-size:900px;
+    }
+  }
   .kicker{
     font-family:'IBM Plex Mono',monospace;color:var(--red);
     font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;
@@ -632,7 +641,7 @@
 <header class="site">
   <div class="wrap navrow">
     <a href="#top" class="logo" id="siteLogo">
-      <img src="logo.png" alt="Remzona" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:'REMZONA'}))">
+      <img src="logo.png" alt="Remzona" decoding="async" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:'REMZONA'}))">
     </a>
     <nav class="main" id="mainNav">
       <a href="#servisas" data-i18n="nav_service">Servisas</a>
@@ -650,7 +659,7 @@
 
 <section class="hero" id="top">
   <div class="hero-media" aria-hidden="true">
-    <img src="hero-photo.jpg" alt="" onerror="this.parentElement.style.display='none'">
+    <img src="hero-photo.jpg" alt="" fetchpriority="high" decoding="async" onerror="this.parentElement.style.display='none'">
   </div>
   <div class="wrap">
     <div>
@@ -676,16 +685,16 @@
   </div>
   <div class="partners-track-wrap reveal">
     <div class="partners-track" id="partnersTrack">
-      <img class="partner-logo" src="partners/wabco.png" alt="WABCO">
-      <img class="partner-logo" src="partners/knorr.png" alt="KNORR-BREMSE">
-      <img class="partner-logo" src="partners/haldex.png" alt="HALDEX">
-      <img class="partner-logo" src="partners/bosch.png" alt="BOSCH">
-      <img class="partner-logo" src="partners/mobil.png" alt="MOBIL">
-      <img class="partner-logo" src="partners/wabco.png" alt="WABCO" aria-hidden="true">
-      <img class="partner-logo" src="partners/knorr.png" alt="KNORR-BREMSE" aria-hidden="true">
-      <img class="partner-logo" src="partners/haldex.png" alt="HALDEX" aria-hidden="true">
-      <img class="partner-logo" src="partners/bosch.png" alt="BOSCH" aria-hidden="true">
-      <img class="partner-logo" src="partners/mobil.png" alt="MOBIL" aria-hidden="true">
+      <img class="partner-logo" decoding="async" src="partners/wabco.png" alt="WABCO">
+      <img class="partner-logo" decoding="async" src="partners/knorr.png" alt="KNORR-BREMSE">
+      <img class="partner-logo" decoding="async" src="partners/haldex.png" alt="HALDEX">
+      <img class="partner-logo" decoding="async" src="partners/bosch.png" alt="BOSCH">
+      <img class="partner-logo" decoding="async" src="partners/mobil.png" alt="MOBIL">
+      <img class="partner-logo" decoding="async" src="partners/wabco.png" alt="WABCO" aria-hidden="true">
+      <img class="partner-logo" decoding="async" src="partners/knorr.png" alt="KNORR-BREMSE" aria-hidden="true">
+      <img class="partner-logo" decoding="async" src="partners/haldex.png" alt="HALDEX" aria-hidden="true">
+      <img class="partner-logo" decoding="async" src="partners/bosch.png" alt="BOSCH" aria-hidden="true">
+      <img class="partner-logo" decoding="async" src="partners/mobil.png" alt="MOBIL" aria-hidden="true">
     </div>
   </div>
 </div>
@@ -816,7 +825,7 @@
       </div>
     </div>
     <div class="about-photo reveal">
-      <img src="about-photo.jpg" alt="Remzona dirbtuvės" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+      <img src="about-photo.jpg" alt="Remzona dirbtuvės" loading="lazy" decoding="async" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
       <span class="about-photo-fallback" data-i18n="about_photo" style="display:none;">Dirbtuvių nuotrauka<br>(bus įkelta)</span>
     </div>
   </div>
